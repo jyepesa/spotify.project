@@ -1,11 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
 import SearchBar from './components/SearchBar';
+import TrackList from './components/TrackList';
+import songs from './mockDataSongs';
 
 function App() {
   return (
     <div className="App">
       <SearchBar />
+      <TrackList playlist={songs}/>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
