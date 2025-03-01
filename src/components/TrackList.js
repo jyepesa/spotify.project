@@ -7,7 +7,7 @@ function TrackList({ playlist }) {
             {playlist.map(track => {
                 const { id, name, artist, album } = track
                 return (
-                <Track id={id} name={name} artist={artist} album={album}/>
+                <Track key={id} name={name} artist={artist} album={album}/>
             )})}
         </div>
     )

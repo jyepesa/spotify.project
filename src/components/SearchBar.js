@@ -6,6 +6,7 @@ function SearchBar(props) {
     }
     const handleSubmit = (e) => {
         e.preventDefault();   
+        props.onSearch(input)
     }
     return (
         <form onSubmit={handleSubmit}>
