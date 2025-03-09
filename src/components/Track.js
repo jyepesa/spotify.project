@@ -1,7 +1,7 @@
 import React from "react";
 function Track(props) {
     return (
-        <div key={props.id}>          
+        <div id={props.id}>          
             <h2>{props.name}</h2>
             <p>{props.artist}</p>         
             <p>{props.album}</p> 
