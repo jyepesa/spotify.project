@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import songs from "../mockDataSongs";
 import SearchBar from "../components/SearchBar";
 import TrackList from "../components/TrackList";
+import ErrorMessage from "../components/ErrorMessage";
+import Playlist from "../components/Playlist";
 
 function SearchLogic({token}) {
     const [results, setResults] = useState([])
     const [input, setInput] = useState("")
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(null)
     const [error, setError] = useState(null)
+    const [playlist, setPlaylist] = useState([])
+
     const handleSearch = (searchTerm) => {
         if(!searchTerm) {
             setResults([])
@@ -28,18 +31,19 @@ function SearchLogic({token}) {
             if(data.tracks && data.tracks.items) {
                 setResults(data.tracks.items.map(track => ({
                     id: track.id,
-                    name: track.name,
-                    artist: (track.artists.map(artist => artist.name)).join(", "),
+                    name: track.name.length > 30 ? `${track.name.slice(0, 29)}...` : track.name,
+                    artist: ((track.artists.map(artist => artist.name)).join(", ")).length > 40 ? `${(track.artists.map(artist => artist.name)).join(", ").slice(0, 39)}...` : (track.artists.map(artist => artist.name)).join(", "),
                     album: track.album.name
                 })))
             } else {
                 setResults([])
             }
+        }).catch(err => {
+            setError("Request not possible: ", err)
         })
-        
-
-        
+           
     }
+ 
     const handleChange = (e) => {
         setInput(e.target.value)  
     }
@@ -48,12 +52,22 @@ function SearchLogic({token}) {
         handleSearch(input)
         setInput("")
     }
-    /*
-            */
+    const addToPlaylist = (song) => {
+        setPlaylist(prev => {
+            if(prev.some(s => s.id === song.id)) {
+                return prev
+            } else {
+                return [...prev, song]
+            }
+        })
+    }
+
     return (
         <div>
             <SearchBar onSubmit={handleSubmit} onChange={handleChange} query={input}/>
-            <TrackList playlist={results}/>
+            <ErrorMessage message={error} loading={loading}/>
+            <TrackList searchResults={results} addSongs={addToPlaylist}/>
+            <Playlist />
         </div>
     )
 }

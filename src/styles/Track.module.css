@@ -1,0 +1,9 @@
+.track {
+    border: 1px solid;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas: "info info info info info button";
+}
+.info {
+    grid-area: info;
+}
