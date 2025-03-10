@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchBar from "../components/SearchBar";
 import TrackList from "../components/TrackList";
 import ErrorMessage from "../components/ErrorMessage";
@@ -11,6 +11,8 @@ function SearchLogic({token}) {
     const [loading, setLoading] = useState(null)
     const [error, setError] = useState(null)
     const [playlist, setPlaylist] = useState([])
+    const [nameInput, setNameInput] = useState("")
+    const [playlistName, setPlaylistName] = useState("")
 
     const handleSearch = (searchTerm) => {
         if(!searchTerm) {
@@ -44,7 +46,20 @@ function SearchLogic({token}) {
         })
            
     }
- 
+    const handleNameChange = (e) => {
+        setNameInput(e.target.value)
+    }
+    useEffect(() => {
+        if(playlist.length === 0) {
+            setPlaylistName("")
+            setNameInput("")
+        }
+    }, [playlist])
+    
+    const handleNaming = (input) => {
+        setPlaylistName(input)
+        setNameInput("")            
+    }
     const handleChange = (e) => {
         setInput(e.target.value)  
     }
@@ -71,7 +86,7 @@ function SearchLogic({token}) {
             <ErrorMessage message={error} loading={loading}/>
             <div className={styles.lists}>
                 <TrackList searchResults={results} addSongs={addToPlaylist}/>
-                <Playlist playlist={playlist} remove={removeSong}/>
+                <Playlist playlist={playlist} remove={removeSong} name={playlistName} nameChange={handleNaming} input={nameInput} onChange={handleNameChange}/>
             </div>
         </div>
     )

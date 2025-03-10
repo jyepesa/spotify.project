@@ -11,3 +11,9 @@
     position: relative;
     left: 5px;
 }
+.nameInput {
+    margin-bottom: 1rem;
+}
+.invisible {
+    display: none;
+}

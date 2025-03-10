@@ -9,7 +9,7 @@ function TrackList({ searchResults, addSongs }) {
                 const { id, name, artist, album } = track
                 return (
                 <Track key={id} name={name} artist={artist} album={album}>
-                    <button className={styles.add} onClick={addSongs}>+</button>
+                    <button className={styles.add} onClick={() => addSongs(track)}>+</button>
                 </Track>
             )})}
         </div>
