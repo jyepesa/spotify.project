@@ -3,6 +3,7 @@ import SearchBar from "../components/SearchBar";
 import TrackList from "../components/TrackList";
 import ErrorMessage from "../components/ErrorMessage";
 import Playlist from "../components/Playlist";
+import styles from "../styles/SearchLogic.module.css"
 
 function SearchLogic({token}) {
     const [results, setResults] = useState([])
@@ -61,13 +62,17 @@ function SearchLogic({token}) {
             }
         })
     }
-
+    const removeSong = (song) => {
+        setPlaylist(prev => prev.filter(s => s.id !== song.id))
+    }
     return (
         <div>
             <SearchBar onSubmit={handleSubmit} onChange={handleChange} query={input}/>
             <ErrorMessage message={error} loading={loading}/>
-            <TrackList searchResults={results} addSongs={addToPlaylist}/>
-            <Playlist />
+            <div className={styles.lists}>
+                <TrackList searchResults={results} addSongs={addToPlaylist}/>
+                <Playlist playlist={playlist} remove={removeSong}/>
+            </div>
         </div>
     )
 }

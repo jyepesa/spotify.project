@@ -1,0 +1,13 @@
+.playlist {
+    margin: 1rem;
+    width: 40%;
+    font-size: 14px;
+}
+.remove {
+    float: right;
+    grid-area: button;
+    align-self: center;
+    justify-self: center;
+    position: relative;
+    left: 5px;
+}
